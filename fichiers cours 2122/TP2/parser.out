@@ -1,0 +1,2514 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    PROC
+
+Grammar
+
+Rule 0     S' -> start
+Rule 1     start -> code
+Rule 2     code -> function code
+Rule 3     code -> function
+Rule 4     param -> VAR DELIMPARAM param
+Rule 5     param -> VAR
+Rule 6     callparam -> expression DELIMPARAM callparam
+Rule 7     callparam -> expression
+Rule 8     value -> expression
+Rule 9     value -> VAR
+Rule 10    listvalue -> value
+Rule 11    listvalue -> value DELIMPARAM listvalue
+Rule 12    array -> LBRACKET listvalue RBRACKET
+Rule 13    array -> LBRACKET RBRACKET
+Rule 14    function -> FUN VAR LPAREN param RPAREN OPENBRACE bloc CLOSEBRACE
+Rule 15    function -> FUN VAR LPAREN RPAREN OPENBRACE bloc CLOSEBRACE
+Rule 16    bloc -> statement bloc
+Rule 17    bloc -> statement
+Rule 18    statement -> expression DELIM
+Rule 19    statement -> assign DELIM
+Rule 20    statement -> ifstatement
+Rule 21    ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+Rule 22    ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+Rule 23    ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+Rule 24    statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+Rule 25    statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+Rule 26    expression -> PRINT LPAREN expression RPAREN
+Rule 27    expression -> expression AND expression
+Rule 28    expression -> expression OR expression
+Rule 29    expression -> expression COMPARE expression
+Rule 30    expression -> expression PLUS expression
+Rule 31    expression -> expression MINUS expression
+Rule 32    expression -> expression TIMES expression
+Rule 33    expression -> expression DIVIDE expression
+Rule 34    expression -> VAR INC
+Rule 35    expression -> VAR DEC
+Rule 36    expression -> VAR ASSPLUS expression
+Rule 37    expression -> VAR ASSMINUS expression
+Rule 38    expression -> VAR ASSTIMES expression
+Rule 39    expression -> VAR ASSDIV expression
+Rule 40    expression -> LPAREN expression RPAREN
+Rule 41    expression -> NUMBER
+Rule 42    expression -> OPENQUOTE ANY CLOSEQUOTE
+Rule 43    expression -> VAR
+Rule 44    expression -> VAR LPAREN callparam RPAREN
+Rule 45    expression -> VAR LPAREN RPAREN
+Rule 46    assign -> VAR AFFECT expression
+Rule 47    assign -> VAR AFFECT array
+
+Terminals, with rules where they appear
+
+AFFECT               : 46 47
+AND                  : 27
+ANY                  : 42
+ASSDIV               : 39
+ASSMINUS             : 37
+ASSPLUS              : 36
+ASSTIMES             : 38
+CLOSEBRACE           : 14 15 21 22 22 23 24 25
+CLOSEQUOTE           : 42
+COMPARE              : 29
+DEC                  : 35
+DELIM                : 18 19 25 25
+DELIMPARAM           : 4 6 11
+DIVIDE               : 33
+ELSE                 : 22 23
+FOR                  : 25
+FUN                  : 14 15
+IF                   : 21 22 23
+INC                  : 34
+LBRACKET             : 12 13
+LPAREN               : 14 15 21 22 23 24 25 26 40 44 45
+MINUS                : 31
+NUMBER               : 41
+OPENBRACE            : 14 15 21 22 22 23 24 25
+OPENQUOTE            : 42
+OR                   : 28
+PLUS                 : 30
+PRINT                : 26
+PROC                 : 
+RBRACKET             : 12 13
+RPAREN               : 14 15 21 22 23 24 25 26 40 44 45
+TIMES                : 32
+VAR                  : 4 5 9 14 15 34 35 36 37 38 39 43 44 45 46 47
+WHILE                : 24
+error                : 
+
+Nonterminals, with rules where they appear
+
+array                : 47
+assign               : 19 25
+bloc                 : 14 15 16 21 22 22 23 24 25 25
+callparam            : 6 44
+code                 : 1 2
+expression           : 6 7 8 18 21 22 23 24 25 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 36 37 38 39 40 46
+function             : 2 3
+ifstatement          : 20 23
+listvalue            : 11 12
+param                : 4 14
+start                : 0
+statement            : 16 17
+value                : 10 11
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . start
+    (1) start -> . code
+    (2) code -> . function code
+    (3) code -> . function
+    (14) function -> . FUN VAR LPAREN param RPAREN OPENBRACE bloc CLOSEBRACE
+    (15) function -> . FUN VAR LPAREN RPAREN OPENBRACE bloc CLOSEBRACE
+
+    FUN             shift and go to state 4
+
+    start                          shift and go to state 1
+    code                           shift and go to state 2
+    function                       shift and go to state 3
+
+state 1
+
+    (0) S' -> start .
+
+
+
+state 2
+
+    (1) start -> code .
+
+    $end            reduce using rule 1 (start -> code .)
+
+
+state 3
+
+    (2) code -> function . code
+    (3) code -> function .
+    (2) code -> . function code
+    (3) code -> . function
+    (14) function -> . FUN VAR LPAREN param RPAREN OPENBRACE bloc CLOSEBRACE
+    (15) function -> . FUN VAR LPAREN RPAREN OPENBRACE bloc CLOSEBRACE
+
+    $end            reduce using rule 3 (code -> function .)
+    FUN             shift and go to state 4
+
+    function                       shift and go to state 3
+    code                           shift and go to state 5
+
+state 4
+
+    (14) function -> FUN . VAR LPAREN param RPAREN OPENBRACE bloc CLOSEBRACE
+    (15) function -> FUN . VAR LPAREN RPAREN OPENBRACE bloc CLOSEBRACE
+
+    VAR             shift and go to state 6
+
+
+state 5
+
+    (2) code -> function code .
+
+    $end            reduce using rule 2 (code -> function code .)
+
+
+state 6
+
+    (14) function -> FUN VAR . LPAREN param RPAREN OPENBRACE bloc CLOSEBRACE
+    (15) function -> FUN VAR . LPAREN RPAREN OPENBRACE bloc CLOSEBRACE
+
+    LPAREN          shift and go to state 7
+
+
+state 7
+
+    (14) function -> FUN VAR LPAREN . param RPAREN OPENBRACE bloc CLOSEBRACE
+    (15) function -> FUN VAR LPAREN . RPAREN OPENBRACE bloc CLOSEBRACE
+    (4) param -> . VAR DELIMPARAM param
+    (5) param -> . VAR
+
+    RPAREN          shift and go to state 10
+    VAR             shift and go to state 8
+
+    param                          shift and go to state 9
+
+state 8
+
+    (4) param -> VAR . DELIMPARAM param
+    (5) param -> VAR .
+
+    DELIMPARAM      shift and go to state 11
+    RPAREN          reduce using rule 5 (param -> VAR .)
+
+
+state 9
+
+    (14) function -> FUN VAR LPAREN param . RPAREN OPENBRACE bloc CLOSEBRACE
+
+    RPAREN          shift and go to state 12
+
+
+state 10
+
+    (15) function -> FUN VAR LPAREN RPAREN . OPENBRACE bloc CLOSEBRACE
+
+    OPENBRACE       shift and go to state 13
+
+
+state 11
+
+    (4) param -> VAR DELIMPARAM . param
+    (4) param -> . VAR DELIMPARAM param
+    (5) param -> . VAR
+
+    VAR             shift and go to state 8
+
+    param                          shift and go to state 14
+
+state 12
+
+    (14) function -> FUN VAR LPAREN param RPAREN . OPENBRACE bloc CLOSEBRACE
+
+    OPENBRACE       shift and go to state 15
+
+
+state 13
+
+    (15) function -> FUN VAR LPAREN RPAREN OPENBRACE . bloc CLOSEBRACE
+    (16) bloc -> . statement bloc
+    (17) bloc -> . statement
+    (18) statement -> . expression DELIM
+    (19) statement -> . assign DELIM
+    (20) statement -> . ifstatement
+    (24) statement -> . WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (25) statement -> . FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+    (46) assign -> . VAR AFFECT expression
+    (47) assign -> . VAR AFFECT array
+    (21) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+
+    WHILE           shift and go to state 23
+    FOR             shift and go to state 24
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 16
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+    IF              shift and go to state 28
+
+    bloc                           shift and go to state 18
+    statement                      shift and go to state 19
+    expression                     shift and go to state 20
+    assign                         shift and go to state 21
+    ifstatement                    shift and go to state 22
+
+state 14
+
+    (4) param -> VAR DELIMPARAM param .
+
+    RPAREN          reduce using rule 4 (param -> VAR DELIMPARAM param .)
+
+
+state 15
+
+    (14) function -> FUN VAR LPAREN param RPAREN OPENBRACE . bloc CLOSEBRACE
+    (16) bloc -> . statement bloc
+    (17) bloc -> . statement
+    (18) statement -> . expression DELIM
+    (19) statement -> . assign DELIM
+    (20) statement -> . ifstatement
+    (24) statement -> . WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (25) statement -> . FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+    (46) assign -> . VAR AFFECT expression
+    (47) assign -> . VAR AFFECT array
+    (21) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+
+    WHILE           shift and go to state 23
+    FOR             shift and go to state 24
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 16
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+    IF              shift and go to state 28
+
+    bloc                           shift and go to state 29
+    statement                      shift and go to state 19
+    expression                     shift and go to state 20
+    assign                         shift and go to state 21
+    ifstatement                    shift and go to state 22
+
+state 16
+
+    (34) expression -> VAR . INC
+    (35) expression -> VAR . DEC
+    (36) expression -> VAR . ASSPLUS expression
+    (37) expression -> VAR . ASSMINUS expression
+    (38) expression -> VAR . ASSTIMES expression
+    (39) expression -> VAR . ASSDIV expression
+    (43) expression -> VAR .
+    (44) expression -> VAR . LPAREN callparam RPAREN
+    (45) expression -> VAR . LPAREN RPAREN
+    (46) assign -> VAR . AFFECT expression
+    (47) assign -> VAR . AFFECT array
+
+    INC             shift and go to state 30
+    DEC             shift and go to state 31
+    ASSPLUS         shift and go to state 32
+    ASSMINUS        shift and go to state 33
+    ASSTIMES        shift and go to state 34
+    ASSDIV          shift and go to state 35
+    DELIM           reduce using rule 43 (expression -> VAR .)
+    AND             reduce using rule 43 (expression -> VAR .)
+    OR              reduce using rule 43 (expression -> VAR .)
+    COMPARE         reduce using rule 43 (expression -> VAR .)
+    PLUS            reduce using rule 43 (expression -> VAR .)
+    MINUS           reduce using rule 43 (expression -> VAR .)
+    TIMES           reduce using rule 43 (expression -> VAR .)
+    DIVIDE          reduce using rule 43 (expression -> VAR .)
+    LPAREN          shift and go to state 36
+    AFFECT          shift and go to state 37
+
+
+state 17
+
+    (40) expression -> LPAREN . expression RPAREN
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 38
+
+state 18
+
+    (15) function -> FUN VAR LPAREN RPAREN OPENBRACE bloc . CLOSEBRACE
+
+    CLOSEBRACE      shift and go to state 40
+
+
+state 19
+
+    (16) bloc -> statement . bloc
+    (17) bloc -> statement .
+    (16) bloc -> . statement bloc
+    (17) bloc -> . statement
+    (18) statement -> . expression DELIM
+    (19) statement -> . assign DELIM
+    (20) statement -> . ifstatement
+    (24) statement -> . WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (25) statement -> . FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+    (46) assign -> . VAR AFFECT expression
+    (47) assign -> . VAR AFFECT array
+    (21) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+
+    CLOSEBRACE      reduce using rule 17 (bloc -> statement .)
+    RPAREN          reduce using rule 17 (bloc -> statement .)
+    WHILE           shift and go to state 23
+    FOR             shift and go to state 24
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 16
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+    IF              shift and go to state 28
+
+    statement                      shift and go to state 19
+    bloc                           shift and go to state 41
+    expression                     shift and go to state 20
+    assign                         shift and go to state 21
+    ifstatement                    shift and go to state 22
+
+state 20
+
+    (18) statement -> expression . DELIM
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           shift and go to state 42
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    COMPARE         shift and go to state 45
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+
+state 21
+
+    (19) statement -> assign . DELIM
+
+    DELIM           shift and go to state 50
+
+
+state 22
+
+    (20) statement -> ifstatement .
+
+    WHILE           reduce using rule 20 (statement -> ifstatement .)
+    FOR             reduce using rule 20 (statement -> ifstatement .)
+    PRINT           reduce using rule 20 (statement -> ifstatement .)
+    VAR             reduce using rule 20 (statement -> ifstatement .)
+    LPAREN          reduce using rule 20 (statement -> ifstatement .)
+    NUMBER          reduce using rule 20 (statement -> ifstatement .)
+    OPENQUOTE       reduce using rule 20 (statement -> ifstatement .)
+    IF              reduce using rule 20 (statement -> ifstatement .)
+    CLOSEBRACE      reduce using rule 20 (statement -> ifstatement .)
+    RPAREN          reduce using rule 20 (statement -> ifstatement .)
+
+
+state 23
+
+    (24) statement -> WHILE . LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+
+    LPAREN          shift and go to state 51
+
+
+state 24
+
+    (25) statement -> FOR . LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+
+    LPAREN          shift and go to state 52
+
+
+state 25
+
+    (26) expression -> PRINT . LPAREN expression RPAREN
+
+    LPAREN          shift and go to state 53
+
+
+state 26
+
+    (41) expression -> NUMBER .
+
+    DELIM           reduce using rule 41 (expression -> NUMBER .)
+    AND             reduce using rule 41 (expression -> NUMBER .)
+    OR              reduce using rule 41 (expression -> NUMBER .)
+    COMPARE         reduce using rule 41 (expression -> NUMBER .)
+    PLUS            reduce using rule 41 (expression -> NUMBER .)
+    MINUS           reduce using rule 41 (expression -> NUMBER .)
+    TIMES           reduce using rule 41 (expression -> NUMBER .)
+    DIVIDE          reduce using rule 41 (expression -> NUMBER .)
+    RPAREN          reduce using rule 41 (expression -> NUMBER .)
+    DELIMPARAM      reduce using rule 41 (expression -> NUMBER .)
+    RBRACKET        reduce using rule 41 (expression -> NUMBER .)
+
+
+state 27
+
+    (42) expression -> OPENQUOTE . ANY CLOSEQUOTE
+
+    ANY             shift and go to state 54
+
+
+state 28
+
+    (21) ifstatement -> IF . LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> IF . LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> IF . LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+
+    LPAREN          shift and go to state 55
+
+
+state 29
+
+    (14) function -> FUN VAR LPAREN param RPAREN OPENBRACE bloc . CLOSEBRACE
+
+    CLOSEBRACE      shift and go to state 56
+
+
+state 30
+
+    (34) expression -> VAR INC .
+
+    DELIM           reduce using rule 34 (expression -> VAR INC .)
+    AND             reduce using rule 34 (expression -> VAR INC .)
+    OR              reduce using rule 34 (expression -> VAR INC .)
+    COMPARE         reduce using rule 34 (expression -> VAR INC .)
+    PLUS            reduce using rule 34 (expression -> VAR INC .)
+    MINUS           reduce using rule 34 (expression -> VAR INC .)
+    TIMES           reduce using rule 34 (expression -> VAR INC .)
+    DIVIDE          reduce using rule 34 (expression -> VAR INC .)
+    RPAREN          reduce using rule 34 (expression -> VAR INC .)
+    DELIMPARAM      reduce using rule 34 (expression -> VAR INC .)
+    RBRACKET        reduce using rule 34 (expression -> VAR INC .)
+
+
+state 31
+
+    (35) expression -> VAR DEC .
+
+    DELIM           reduce using rule 35 (expression -> VAR DEC .)
+    AND             reduce using rule 35 (expression -> VAR DEC .)
+    OR              reduce using rule 35 (expression -> VAR DEC .)
+    COMPARE         reduce using rule 35 (expression -> VAR DEC .)
+    PLUS            reduce using rule 35 (expression -> VAR DEC .)
+    MINUS           reduce using rule 35 (expression -> VAR DEC .)
+    TIMES           reduce using rule 35 (expression -> VAR DEC .)
+    DIVIDE          reduce using rule 35 (expression -> VAR DEC .)
+    RPAREN          reduce using rule 35 (expression -> VAR DEC .)
+    DELIMPARAM      reduce using rule 35 (expression -> VAR DEC .)
+    RBRACKET        reduce using rule 35 (expression -> VAR DEC .)
+
+
+state 32
+
+    (36) expression -> VAR ASSPLUS . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 57
+
+state 33
+
+    (37) expression -> VAR ASSMINUS . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 58
+
+state 34
+
+    (38) expression -> VAR ASSTIMES . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 59
+
+state 35
+
+    (39) expression -> VAR ASSDIV . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 60
+
+state 36
+
+    (44) expression -> VAR LPAREN . callparam RPAREN
+    (45) expression -> VAR LPAREN . RPAREN
+    (6) callparam -> . expression DELIMPARAM callparam
+    (7) callparam -> . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    RPAREN          shift and go to state 62
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    callparam                      shift and go to state 61
+    expression                     shift and go to state 63
+
+state 37
+
+    (46) assign -> VAR AFFECT . expression
+    (47) assign -> VAR AFFECT . array
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+    (12) array -> . LBRACKET listvalue RBRACKET
+    (13) array -> . LBRACKET RBRACKET
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+    LBRACKET        shift and go to state 66
+
+    expression                     shift and go to state 64
+    array                          shift and go to state 65
+
+state 38
+
+    (40) expression -> LPAREN expression . RPAREN
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    RPAREN          shift and go to state 67
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    COMPARE         shift and go to state 45
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+
+state 39
+
+    (34) expression -> VAR . INC
+    (35) expression -> VAR . DEC
+    (36) expression -> VAR . ASSPLUS expression
+    (37) expression -> VAR . ASSMINUS expression
+    (38) expression -> VAR . ASSTIMES expression
+    (39) expression -> VAR . ASSDIV expression
+    (43) expression -> VAR .
+    (44) expression -> VAR . LPAREN callparam RPAREN
+    (45) expression -> VAR . LPAREN RPAREN
+
+    INC             shift and go to state 30
+    DEC             shift and go to state 31
+    ASSPLUS         shift and go to state 32
+    ASSMINUS        shift and go to state 33
+    ASSTIMES        shift and go to state 34
+    ASSDIV          shift and go to state 35
+    RPAREN          reduce using rule 43 (expression -> VAR .)
+    AND             reduce using rule 43 (expression -> VAR .)
+    OR              reduce using rule 43 (expression -> VAR .)
+    COMPARE         reduce using rule 43 (expression -> VAR .)
+    PLUS            reduce using rule 43 (expression -> VAR .)
+    MINUS           reduce using rule 43 (expression -> VAR .)
+    TIMES           reduce using rule 43 (expression -> VAR .)
+    DIVIDE          reduce using rule 43 (expression -> VAR .)
+    DELIM           reduce using rule 43 (expression -> VAR .)
+    DELIMPARAM      reduce using rule 43 (expression -> VAR .)
+    RBRACKET        reduce using rule 43 (expression -> VAR .)
+    LPAREN          shift and go to state 36
+
+
+state 40
+
+    (15) function -> FUN VAR LPAREN RPAREN OPENBRACE bloc CLOSEBRACE .
+
+    FUN             reduce using rule 15 (function -> FUN VAR LPAREN RPAREN OPENBRACE bloc CLOSEBRACE .)
+    $end            reduce using rule 15 (function -> FUN VAR LPAREN RPAREN OPENBRACE bloc CLOSEBRACE .)
+
+
+state 41
+
+    (16) bloc -> statement bloc .
+
+    CLOSEBRACE      reduce using rule 16 (bloc -> statement bloc .)
+    RPAREN          reduce using rule 16 (bloc -> statement bloc .)
+
+
+state 42
+
+    (18) statement -> expression DELIM .
+
+    WHILE           reduce using rule 18 (statement -> expression DELIM .)
+    FOR             reduce using rule 18 (statement -> expression DELIM .)
+    PRINT           reduce using rule 18 (statement -> expression DELIM .)
+    VAR             reduce using rule 18 (statement -> expression DELIM .)
+    LPAREN          reduce using rule 18 (statement -> expression DELIM .)
+    NUMBER          reduce using rule 18 (statement -> expression DELIM .)
+    OPENQUOTE       reduce using rule 18 (statement -> expression DELIM .)
+    IF              reduce using rule 18 (statement -> expression DELIM .)
+    CLOSEBRACE      reduce using rule 18 (statement -> expression DELIM .)
+    RPAREN          reduce using rule 18 (statement -> expression DELIM .)
+
+
+state 43
+
+    (27) expression -> expression AND . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 68
+
+state 44
+
+    (28) expression -> expression OR . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 69
+
+state 45
+
+    (29) expression -> expression COMPARE . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 70
+
+state 46
+
+    (30) expression -> expression PLUS . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 71
+
+state 47
+
+    (31) expression -> expression MINUS . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 72
+
+state 48
+
+    (32) expression -> expression TIMES . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 73
+
+state 49
+
+    (33) expression -> expression DIVIDE . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 74
+
+state 50
+
+    (19) statement -> assign DELIM .
+
+    WHILE           reduce using rule 19 (statement -> assign DELIM .)
+    FOR             reduce using rule 19 (statement -> assign DELIM .)
+    PRINT           reduce using rule 19 (statement -> assign DELIM .)
+    VAR             reduce using rule 19 (statement -> assign DELIM .)
+    LPAREN          reduce using rule 19 (statement -> assign DELIM .)
+    NUMBER          reduce using rule 19 (statement -> assign DELIM .)
+    OPENQUOTE       reduce using rule 19 (statement -> assign DELIM .)
+    IF              reduce using rule 19 (statement -> assign DELIM .)
+    CLOSEBRACE      reduce using rule 19 (statement -> assign DELIM .)
+    RPAREN          reduce using rule 19 (statement -> assign DELIM .)
+
+
+state 51
+
+    (24) statement -> WHILE LPAREN . expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 75
+
+state 52
+
+    (25) statement -> FOR LPAREN . assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+    (46) assign -> . VAR AFFECT expression
+    (47) assign -> . VAR AFFECT array
+
+    VAR             shift and go to state 77
+
+    assign                         shift and go to state 76
+
+state 53
+
+    (26) expression -> PRINT LPAREN . expression RPAREN
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 78
+
+state 54
+
+    (42) expression -> OPENQUOTE ANY . CLOSEQUOTE
+
+    CLOSEQUOTE      shift and go to state 79
+
+
+state 55
+
+    (21) ifstatement -> IF LPAREN . expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> IF LPAREN . expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> IF LPAREN . expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 80
+
+state 56
+
+    (14) function -> FUN VAR LPAREN param RPAREN OPENBRACE bloc CLOSEBRACE .
+
+    FUN             reduce using rule 14 (function -> FUN VAR LPAREN param RPAREN OPENBRACE bloc CLOSEBRACE .)
+    $end            reduce using rule 14 (function -> FUN VAR LPAREN param RPAREN OPENBRACE bloc CLOSEBRACE .)
+
+
+state 57
+
+    (36) expression -> VAR ASSPLUS expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           reduce using rule 36 (expression -> VAR ASSPLUS expression .)
+    COMPARE         reduce using rule 36 (expression -> VAR ASSPLUS expression .)
+    RPAREN          reduce using rule 36 (expression -> VAR ASSPLUS expression .)
+    DELIMPARAM      reduce using rule 36 (expression -> VAR ASSPLUS expression .)
+    RBRACKET        reduce using rule 36 (expression -> VAR ASSPLUS expression .)
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+  ! AND             [ reduce using rule 36 (expression -> VAR ASSPLUS expression .) ]
+  ! OR              [ reduce using rule 36 (expression -> VAR ASSPLUS expression .) ]
+  ! PLUS            [ reduce using rule 36 (expression -> VAR ASSPLUS expression .) ]
+  ! MINUS           [ reduce using rule 36 (expression -> VAR ASSPLUS expression .) ]
+  ! TIMES           [ reduce using rule 36 (expression -> VAR ASSPLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 36 (expression -> VAR ASSPLUS expression .) ]
+  ! COMPARE         [ shift and go to state 45 ]
+
+
+state 58
+
+    (37) expression -> VAR ASSMINUS expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           reduce using rule 37 (expression -> VAR ASSMINUS expression .)
+    COMPARE         reduce using rule 37 (expression -> VAR ASSMINUS expression .)
+    RPAREN          reduce using rule 37 (expression -> VAR ASSMINUS expression .)
+    DELIMPARAM      reduce using rule 37 (expression -> VAR ASSMINUS expression .)
+    RBRACKET        reduce using rule 37 (expression -> VAR ASSMINUS expression .)
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+  ! AND             [ reduce using rule 37 (expression -> VAR ASSMINUS expression .) ]
+  ! OR              [ reduce using rule 37 (expression -> VAR ASSMINUS expression .) ]
+  ! PLUS            [ reduce using rule 37 (expression -> VAR ASSMINUS expression .) ]
+  ! MINUS           [ reduce using rule 37 (expression -> VAR ASSMINUS expression .) ]
+  ! TIMES           [ reduce using rule 37 (expression -> VAR ASSMINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 37 (expression -> VAR ASSMINUS expression .) ]
+  ! COMPARE         [ shift and go to state 45 ]
+
+
+state 59
+
+    (38) expression -> VAR ASSTIMES expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           reduce using rule 38 (expression -> VAR ASSTIMES expression .)
+    COMPARE         reduce using rule 38 (expression -> VAR ASSTIMES expression .)
+    RPAREN          reduce using rule 38 (expression -> VAR ASSTIMES expression .)
+    DELIMPARAM      reduce using rule 38 (expression -> VAR ASSTIMES expression .)
+    RBRACKET        reduce using rule 38 (expression -> VAR ASSTIMES expression .)
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+  ! AND             [ reduce using rule 38 (expression -> VAR ASSTIMES expression .) ]
+  ! OR              [ reduce using rule 38 (expression -> VAR ASSTIMES expression .) ]
+  ! PLUS            [ reduce using rule 38 (expression -> VAR ASSTIMES expression .) ]
+  ! MINUS           [ reduce using rule 38 (expression -> VAR ASSTIMES expression .) ]
+  ! TIMES           [ reduce using rule 38 (expression -> VAR ASSTIMES expression .) ]
+  ! DIVIDE          [ reduce using rule 38 (expression -> VAR ASSTIMES expression .) ]
+  ! COMPARE         [ shift and go to state 45 ]
+
+
+state 60
+
+    (39) expression -> VAR ASSDIV expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           reduce using rule 39 (expression -> VAR ASSDIV expression .)
+    COMPARE         reduce using rule 39 (expression -> VAR ASSDIV expression .)
+    RPAREN          reduce using rule 39 (expression -> VAR ASSDIV expression .)
+    DELIMPARAM      reduce using rule 39 (expression -> VAR ASSDIV expression .)
+    RBRACKET        reduce using rule 39 (expression -> VAR ASSDIV expression .)
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+  ! AND             [ reduce using rule 39 (expression -> VAR ASSDIV expression .) ]
+  ! OR              [ reduce using rule 39 (expression -> VAR ASSDIV expression .) ]
+  ! PLUS            [ reduce using rule 39 (expression -> VAR ASSDIV expression .) ]
+  ! MINUS           [ reduce using rule 39 (expression -> VAR ASSDIV expression .) ]
+  ! TIMES           [ reduce using rule 39 (expression -> VAR ASSDIV expression .) ]
+  ! DIVIDE          [ reduce using rule 39 (expression -> VAR ASSDIV expression .) ]
+  ! COMPARE         [ shift and go to state 45 ]
+
+
+state 61
+
+    (44) expression -> VAR LPAREN callparam . RPAREN
+
+    RPAREN          shift and go to state 81
+
+
+state 62
+
+    (45) expression -> VAR LPAREN RPAREN .
+
+    DELIM           reduce using rule 45 (expression -> VAR LPAREN RPAREN .)
+    AND             reduce using rule 45 (expression -> VAR LPAREN RPAREN .)
+    OR              reduce using rule 45 (expression -> VAR LPAREN RPAREN .)
+    COMPARE         reduce using rule 45 (expression -> VAR LPAREN RPAREN .)
+    PLUS            reduce using rule 45 (expression -> VAR LPAREN RPAREN .)
+    MINUS           reduce using rule 45 (expression -> VAR LPAREN RPAREN .)
+    TIMES           reduce using rule 45 (expression -> VAR LPAREN RPAREN .)
+    DIVIDE          reduce using rule 45 (expression -> VAR LPAREN RPAREN .)
+    RPAREN          reduce using rule 45 (expression -> VAR LPAREN RPAREN .)
+    DELIMPARAM      reduce using rule 45 (expression -> VAR LPAREN RPAREN .)
+    RBRACKET        reduce using rule 45 (expression -> VAR LPAREN RPAREN .)
+
+
+state 63
+
+    (6) callparam -> expression . DELIMPARAM callparam
+    (7) callparam -> expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIMPARAM      shift and go to state 82
+    RPAREN          reduce using rule 7 (callparam -> expression .)
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    COMPARE         shift and go to state 45
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+
+state 64
+
+    (46) assign -> VAR AFFECT expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           reduce using rule 46 (assign -> VAR AFFECT expression .)
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    COMPARE         shift and go to state 45
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+
+state 65
+
+    (47) assign -> VAR AFFECT array .
+
+    DELIM           reduce using rule 47 (assign -> VAR AFFECT array .)
+
+
+state 66
+
+    (12) array -> LBRACKET . listvalue RBRACKET
+    (13) array -> LBRACKET . RBRACKET
+    (10) listvalue -> . value
+    (11) listvalue -> . value DELIMPARAM listvalue
+    (8) value -> . expression
+    (9) value -> . VAR
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    RBRACKET        shift and go to state 84
+    VAR             shift and go to state 87
+    PRINT           shift and go to state 25
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    listvalue                      shift and go to state 83
+    value                          shift and go to state 85
+    expression                     shift and go to state 86
+
+state 67
+
+    (40) expression -> LPAREN expression RPAREN .
+
+    DELIM           reduce using rule 40 (expression -> LPAREN expression RPAREN .)
+    AND             reduce using rule 40 (expression -> LPAREN expression RPAREN .)
+    OR              reduce using rule 40 (expression -> LPAREN expression RPAREN .)
+    COMPARE         reduce using rule 40 (expression -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 40 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 40 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 40 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 40 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 40 (expression -> LPAREN expression RPAREN .)
+    DELIMPARAM      reduce using rule 40 (expression -> LPAREN expression RPAREN .)
+    RBRACKET        reduce using rule 40 (expression -> LPAREN expression RPAREN .)
+
+
+state 68
+
+    (27) expression -> expression AND expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           reduce using rule 27 (expression -> expression AND expression .)
+    COMPARE         reduce using rule 27 (expression -> expression AND expression .)
+    RPAREN          reduce using rule 27 (expression -> expression AND expression .)
+    DELIMPARAM      reduce using rule 27 (expression -> expression AND expression .)
+    RBRACKET        reduce using rule 27 (expression -> expression AND expression .)
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+  ! AND             [ reduce using rule 27 (expression -> expression AND expression .) ]
+  ! OR              [ reduce using rule 27 (expression -> expression AND expression .) ]
+  ! PLUS            [ reduce using rule 27 (expression -> expression AND expression .) ]
+  ! MINUS           [ reduce using rule 27 (expression -> expression AND expression .) ]
+  ! TIMES           [ reduce using rule 27 (expression -> expression AND expression .) ]
+  ! DIVIDE          [ reduce using rule 27 (expression -> expression AND expression .) ]
+  ! COMPARE         [ shift and go to state 45 ]
+
+
+state 69
+
+    (28) expression -> expression OR expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           reduce using rule 28 (expression -> expression OR expression .)
+    COMPARE         reduce using rule 28 (expression -> expression OR expression .)
+    RPAREN          reduce using rule 28 (expression -> expression OR expression .)
+    DELIMPARAM      reduce using rule 28 (expression -> expression OR expression .)
+    RBRACKET        reduce using rule 28 (expression -> expression OR expression .)
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+  ! AND             [ reduce using rule 28 (expression -> expression OR expression .) ]
+  ! OR              [ reduce using rule 28 (expression -> expression OR expression .) ]
+  ! PLUS            [ reduce using rule 28 (expression -> expression OR expression .) ]
+  ! MINUS           [ reduce using rule 28 (expression -> expression OR expression .) ]
+  ! TIMES           [ reduce using rule 28 (expression -> expression OR expression .) ]
+  ! DIVIDE          [ reduce using rule 28 (expression -> expression OR expression .) ]
+  ! COMPARE         [ shift and go to state 45 ]
+
+
+state 70
+
+    (29) expression -> expression COMPARE expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           reduce using rule 29 (expression -> expression COMPARE expression .)
+    COMPARE         reduce using rule 29 (expression -> expression COMPARE expression .)
+    RPAREN          reduce using rule 29 (expression -> expression COMPARE expression .)
+    DELIMPARAM      reduce using rule 29 (expression -> expression COMPARE expression .)
+    RBRACKET        reduce using rule 29 (expression -> expression COMPARE expression .)
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+  ! AND             [ reduce using rule 29 (expression -> expression COMPARE expression .) ]
+  ! OR              [ reduce using rule 29 (expression -> expression COMPARE expression .) ]
+  ! PLUS            [ reduce using rule 29 (expression -> expression COMPARE expression .) ]
+  ! MINUS           [ reduce using rule 29 (expression -> expression COMPARE expression .) ]
+  ! TIMES           [ reduce using rule 29 (expression -> expression COMPARE expression .) ]
+  ! DIVIDE          [ reduce using rule 29 (expression -> expression COMPARE expression .) ]
+  ! COMPARE         [ shift and go to state 45 ]
+
+
+state 71
+
+    (30) expression -> expression PLUS expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           reduce using rule 30 (expression -> expression PLUS expression .)
+    AND             reduce using rule 30 (expression -> expression PLUS expression .)
+    OR              reduce using rule 30 (expression -> expression PLUS expression .)
+    COMPARE         reduce using rule 30 (expression -> expression PLUS expression .)
+    PLUS            reduce using rule 30 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 30 (expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 30 (expression -> expression PLUS expression .)
+    DELIMPARAM      reduce using rule 30 (expression -> expression PLUS expression .)
+    RBRACKET        reduce using rule 30 (expression -> expression PLUS expression .)
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+  ! TIMES           [ reduce using rule 30 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 30 (expression -> expression PLUS expression .) ]
+  ! AND             [ shift and go to state 43 ]
+  ! OR              [ shift and go to state 44 ]
+  ! COMPARE         [ shift and go to state 45 ]
+  ! PLUS            [ shift and go to state 46 ]
+  ! MINUS           [ shift and go to state 47 ]
+
+
+state 72
+
+    (31) expression -> expression MINUS expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           reduce using rule 31 (expression -> expression MINUS expression .)
+    AND             reduce using rule 31 (expression -> expression MINUS expression .)
+    OR              reduce using rule 31 (expression -> expression MINUS expression .)
+    COMPARE         reduce using rule 31 (expression -> expression MINUS expression .)
+    PLUS            reduce using rule 31 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 31 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 31 (expression -> expression MINUS expression .)
+    DELIMPARAM      reduce using rule 31 (expression -> expression MINUS expression .)
+    RBRACKET        reduce using rule 31 (expression -> expression MINUS expression .)
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+  ! TIMES           [ reduce using rule 31 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 31 (expression -> expression MINUS expression .) ]
+  ! AND             [ shift and go to state 43 ]
+  ! OR              [ shift and go to state 44 ]
+  ! COMPARE         [ shift and go to state 45 ]
+  ! PLUS            [ shift and go to state 46 ]
+  ! MINUS           [ shift and go to state 47 ]
+
+
+state 73
+
+    (32) expression -> expression TIMES expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           reduce using rule 32 (expression -> expression TIMES expression .)
+    AND             reduce using rule 32 (expression -> expression TIMES expression .)
+    OR              reduce using rule 32 (expression -> expression TIMES expression .)
+    COMPARE         reduce using rule 32 (expression -> expression TIMES expression .)
+    PLUS            reduce using rule 32 (expression -> expression TIMES expression .)
+    MINUS           reduce using rule 32 (expression -> expression TIMES expression .)
+    TIMES           reduce using rule 32 (expression -> expression TIMES expression .)
+    DIVIDE          reduce using rule 32 (expression -> expression TIMES expression .)
+    RPAREN          reduce using rule 32 (expression -> expression TIMES expression .)
+    DELIMPARAM      reduce using rule 32 (expression -> expression TIMES expression .)
+    RBRACKET        reduce using rule 32 (expression -> expression TIMES expression .)
+
+  ! AND             [ shift and go to state 43 ]
+  ! OR              [ shift and go to state 44 ]
+  ! COMPARE         [ shift and go to state 45 ]
+  ! PLUS            [ shift and go to state 46 ]
+  ! MINUS           [ shift and go to state 47 ]
+  ! TIMES           [ shift and go to state 48 ]
+  ! DIVIDE          [ shift and go to state 49 ]
+
+
+state 74
+
+    (33) expression -> expression DIVIDE expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           reduce using rule 33 (expression -> expression DIVIDE expression .)
+    AND             reduce using rule 33 (expression -> expression DIVIDE expression .)
+    OR              reduce using rule 33 (expression -> expression DIVIDE expression .)
+    COMPARE         reduce using rule 33 (expression -> expression DIVIDE expression .)
+    PLUS            reduce using rule 33 (expression -> expression DIVIDE expression .)
+    MINUS           reduce using rule 33 (expression -> expression DIVIDE expression .)
+    TIMES           reduce using rule 33 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 33 (expression -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 33 (expression -> expression DIVIDE expression .)
+    DELIMPARAM      reduce using rule 33 (expression -> expression DIVIDE expression .)
+    RBRACKET        reduce using rule 33 (expression -> expression DIVIDE expression .)
+
+  ! AND             [ shift and go to state 43 ]
+  ! OR              [ shift and go to state 44 ]
+  ! COMPARE         [ shift and go to state 45 ]
+  ! PLUS            [ shift and go to state 46 ]
+  ! MINUS           [ shift and go to state 47 ]
+  ! TIMES           [ shift and go to state 48 ]
+  ! DIVIDE          [ shift and go to state 49 ]
+
+
+state 75
+
+    (24) statement -> WHILE LPAREN expression . RPAREN OPENBRACE bloc CLOSEBRACE
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    RPAREN          shift and go to state 88
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    COMPARE         shift and go to state 45
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+
+state 76
+
+    (25) statement -> FOR LPAREN assign . DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+
+    DELIM           shift and go to state 89
+
+
+state 77
+
+    (46) assign -> VAR . AFFECT expression
+    (47) assign -> VAR . AFFECT array
+
+    AFFECT          shift and go to state 37
+
+
+state 78
+
+    (26) expression -> PRINT LPAREN expression . RPAREN
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    RPAREN          shift and go to state 90
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    COMPARE         shift and go to state 45
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+
+state 79
+
+    (42) expression -> OPENQUOTE ANY CLOSEQUOTE .
+
+    DELIM           reduce using rule 42 (expression -> OPENQUOTE ANY CLOSEQUOTE .)
+    AND             reduce using rule 42 (expression -> OPENQUOTE ANY CLOSEQUOTE .)
+    OR              reduce using rule 42 (expression -> OPENQUOTE ANY CLOSEQUOTE .)
+    COMPARE         reduce using rule 42 (expression -> OPENQUOTE ANY CLOSEQUOTE .)
+    PLUS            reduce using rule 42 (expression -> OPENQUOTE ANY CLOSEQUOTE .)
+    MINUS           reduce using rule 42 (expression -> OPENQUOTE ANY CLOSEQUOTE .)
+    TIMES           reduce using rule 42 (expression -> OPENQUOTE ANY CLOSEQUOTE .)
+    DIVIDE          reduce using rule 42 (expression -> OPENQUOTE ANY CLOSEQUOTE .)
+    RPAREN          reduce using rule 42 (expression -> OPENQUOTE ANY CLOSEQUOTE .)
+    DELIMPARAM      reduce using rule 42 (expression -> OPENQUOTE ANY CLOSEQUOTE .)
+    RBRACKET        reduce using rule 42 (expression -> OPENQUOTE ANY CLOSEQUOTE .)
+
+
+state 80
+
+    (21) ifstatement -> IF LPAREN expression . RPAREN OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> IF LPAREN expression . RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> IF LPAREN expression . RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    RPAREN          shift and go to state 91
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    COMPARE         shift and go to state 45
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+
+state 81
+
+    (44) expression -> VAR LPAREN callparam RPAREN .
+
+    DELIM           reduce using rule 44 (expression -> VAR LPAREN callparam RPAREN .)
+    AND             reduce using rule 44 (expression -> VAR LPAREN callparam RPAREN .)
+    OR              reduce using rule 44 (expression -> VAR LPAREN callparam RPAREN .)
+    COMPARE         reduce using rule 44 (expression -> VAR LPAREN callparam RPAREN .)
+    PLUS            reduce using rule 44 (expression -> VAR LPAREN callparam RPAREN .)
+    MINUS           reduce using rule 44 (expression -> VAR LPAREN callparam RPAREN .)
+    TIMES           reduce using rule 44 (expression -> VAR LPAREN callparam RPAREN .)
+    DIVIDE          reduce using rule 44 (expression -> VAR LPAREN callparam RPAREN .)
+    RPAREN          reduce using rule 44 (expression -> VAR LPAREN callparam RPAREN .)
+    DELIMPARAM      reduce using rule 44 (expression -> VAR LPAREN callparam RPAREN .)
+    RBRACKET        reduce using rule 44 (expression -> VAR LPAREN callparam RPAREN .)
+
+
+state 82
+
+    (6) callparam -> expression DELIMPARAM . callparam
+    (6) callparam -> . expression DELIMPARAM callparam
+    (7) callparam -> . expression
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 63
+    callparam                      shift and go to state 92
+
+state 83
+
+    (12) array -> LBRACKET listvalue . RBRACKET
+
+    RBRACKET        shift and go to state 93
+
+
+state 84
+
+    (13) array -> LBRACKET RBRACKET .
+
+    DELIM           reduce using rule 13 (array -> LBRACKET RBRACKET .)
+
+
+state 85
+
+    (10) listvalue -> value .
+    (11) listvalue -> value . DELIMPARAM listvalue
+
+    RBRACKET        reduce using rule 10 (listvalue -> value .)
+    DELIMPARAM      shift and go to state 94
+
+
+state 86
+
+    (8) value -> expression .
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIMPARAM      reduce using rule 8 (value -> expression .)
+    RBRACKET        reduce using rule 8 (value -> expression .)
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    COMPARE         shift and go to state 45
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+
+state 87
+
+    (9) value -> VAR .
+    (34) expression -> VAR . INC
+    (35) expression -> VAR . DEC
+    (36) expression -> VAR . ASSPLUS expression
+    (37) expression -> VAR . ASSMINUS expression
+    (38) expression -> VAR . ASSTIMES expression
+    (39) expression -> VAR . ASSDIV expression
+    (43) expression -> VAR .
+    (44) expression -> VAR . LPAREN callparam RPAREN
+    (45) expression -> VAR . LPAREN RPAREN
+
+  ! reduce/reduce conflict for DELIMPARAM resolved using rule 9 (value -> VAR .)
+  ! reduce/reduce conflict for RBRACKET resolved using rule 9 (value -> VAR .)
+    DELIMPARAM      reduce using rule 9 (value -> VAR .)
+    RBRACKET        reduce using rule 9 (value -> VAR .)
+    INC             shift and go to state 30
+    DEC             shift and go to state 31
+    ASSPLUS         shift and go to state 32
+    ASSMINUS        shift and go to state 33
+    ASSTIMES        shift and go to state 34
+    ASSDIV          shift and go to state 35
+    AND             reduce using rule 43 (expression -> VAR .)
+    OR              reduce using rule 43 (expression -> VAR .)
+    COMPARE         reduce using rule 43 (expression -> VAR .)
+    PLUS            reduce using rule 43 (expression -> VAR .)
+    MINUS           reduce using rule 43 (expression -> VAR .)
+    TIMES           reduce using rule 43 (expression -> VAR .)
+    DIVIDE          reduce using rule 43 (expression -> VAR .)
+    LPAREN          shift and go to state 36
+
+  ! DELIMPARAM      [ reduce using rule 43 (expression -> VAR .) ]
+  ! RBRACKET        [ reduce using rule 43 (expression -> VAR .) ]
+
+
+state 88
+
+    (24) statement -> WHILE LPAREN expression RPAREN . OPENBRACE bloc CLOSEBRACE
+
+    OPENBRACE       shift and go to state 95
+
+
+state 89
+
+    (25) statement -> FOR LPAREN assign DELIM . expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 39
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    expression                     shift and go to state 96
+
+state 90
+
+    (26) expression -> PRINT LPAREN expression RPAREN .
+
+    DELIM           reduce using rule 26 (expression -> PRINT LPAREN expression RPAREN .)
+    AND             reduce using rule 26 (expression -> PRINT LPAREN expression RPAREN .)
+    OR              reduce using rule 26 (expression -> PRINT LPAREN expression RPAREN .)
+    COMPARE         reduce using rule 26 (expression -> PRINT LPAREN expression RPAREN .)
+    PLUS            reduce using rule 26 (expression -> PRINT LPAREN expression RPAREN .)
+    MINUS           reduce using rule 26 (expression -> PRINT LPAREN expression RPAREN .)
+    TIMES           reduce using rule 26 (expression -> PRINT LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 26 (expression -> PRINT LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 26 (expression -> PRINT LPAREN expression RPAREN .)
+    DELIMPARAM      reduce using rule 26 (expression -> PRINT LPAREN expression RPAREN .)
+    RBRACKET        reduce using rule 26 (expression -> PRINT LPAREN expression RPAREN .)
+
+
+state 91
+
+    (21) ifstatement -> IF LPAREN expression RPAREN . OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> IF LPAREN expression RPAREN . OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> IF LPAREN expression RPAREN . OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+
+    OPENBRACE       shift and go to state 97
+
+
+state 92
+
+    (6) callparam -> expression DELIMPARAM callparam .
+
+    RPAREN          reduce using rule 6 (callparam -> expression DELIMPARAM callparam .)
+
+
+state 93
+
+    (12) array -> LBRACKET listvalue RBRACKET .
+
+    DELIM           reduce using rule 12 (array -> LBRACKET listvalue RBRACKET .)
+
+
+state 94
+
+    (11) listvalue -> value DELIMPARAM . listvalue
+    (10) listvalue -> . value
+    (11) listvalue -> . value DELIMPARAM listvalue
+    (8) value -> . expression
+    (9) value -> . VAR
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+
+    VAR             shift and go to state 87
+    PRINT           shift and go to state 25
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+
+    value                          shift and go to state 85
+    listvalue                      shift and go to state 98
+    expression                     shift and go to state 86
+
+state 95
+
+    (24) statement -> WHILE LPAREN expression RPAREN OPENBRACE . bloc CLOSEBRACE
+    (16) bloc -> . statement bloc
+    (17) bloc -> . statement
+    (18) statement -> . expression DELIM
+    (19) statement -> . assign DELIM
+    (20) statement -> . ifstatement
+    (24) statement -> . WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (25) statement -> . FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+    (46) assign -> . VAR AFFECT expression
+    (47) assign -> . VAR AFFECT array
+    (21) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+
+    WHILE           shift and go to state 23
+    FOR             shift and go to state 24
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 16
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+    IF              shift and go to state 28
+
+    expression                     shift and go to state 20
+    bloc                           shift and go to state 99
+    statement                      shift and go to state 19
+    assign                         shift and go to state 21
+    ifstatement                    shift and go to state 22
+
+state 96
+
+    (25) statement -> FOR LPAREN assign DELIM expression . DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+    (27) expression -> expression . AND expression
+    (28) expression -> expression . OR expression
+    (29) expression -> expression . COMPARE expression
+    (30) expression -> expression . PLUS expression
+    (31) expression -> expression . MINUS expression
+    (32) expression -> expression . TIMES expression
+    (33) expression -> expression . DIVIDE expression
+
+    DELIM           shift and go to state 100
+    AND             shift and go to state 43
+    OR              shift and go to state 44
+    COMPARE         shift and go to state 45
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 47
+    TIMES           shift and go to state 48
+    DIVIDE          shift and go to state 49
+
+
+state 97
+
+    (21) ifstatement -> IF LPAREN expression RPAREN OPENBRACE . bloc CLOSEBRACE
+    (22) ifstatement -> IF LPAREN expression RPAREN OPENBRACE . bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> IF LPAREN expression RPAREN OPENBRACE . bloc CLOSEBRACE ELSE ifstatement
+    (16) bloc -> . statement bloc
+    (17) bloc -> . statement
+    (18) statement -> . expression DELIM
+    (19) statement -> . assign DELIM
+    (20) statement -> . ifstatement
+    (24) statement -> . WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (25) statement -> . FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+    (46) assign -> . VAR AFFECT expression
+    (47) assign -> . VAR AFFECT array
+    (21) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+
+    WHILE           shift and go to state 23
+    FOR             shift and go to state 24
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 16
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+    IF              shift and go to state 28
+
+    expression                     shift and go to state 20
+    bloc                           shift and go to state 101
+    ifstatement                    shift and go to state 22
+    statement                      shift and go to state 19
+    assign                         shift and go to state 21
+
+state 98
+
+    (11) listvalue -> value DELIMPARAM listvalue .
+
+    RBRACKET        reduce using rule 11 (listvalue -> value DELIMPARAM listvalue .)
+
+
+state 99
+
+    (24) statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc . CLOSEBRACE
+
+    CLOSEBRACE      shift and go to state 102
+
+
+state 100
+
+    (25) statement -> FOR LPAREN assign DELIM expression DELIM . bloc RPAREN OPENBRACE bloc CLOSEBRACE
+    (16) bloc -> . statement bloc
+    (17) bloc -> . statement
+    (18) statement -> . expression DELIM
+    (19) statement -> . assign DELIM
+    (20) statement -> . ifstatement
+    (24) statement -> . WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (25) statement -> . FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+    (46) assign -> . VAR AFFECT expression
+    (47) assign -> . VAR AFFECT array
+    (21) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+
+    WHILE           shift and go to state 23
+    FOR             shift and go to state 24
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 16
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+    IF              shift and go to state 28
+
+    assign                         shift and go to state 21
+    expression                     shift and go to state 20
+    bloc                           shift and go to state 103
+    statement                      shift and go to state 19
+    ifstatement                    shift and go to state 22
+
+state 101
+
+    (21) ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc . CLOSEBRACE
+    (22) ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc . CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc . CLOSEBRACE ELSE ifstatement
+
+    CLOSEBRACE      shift and go to state 104
+
+
+state 102
+
+    (24) statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .
+
+    WHILE           reduce using rule 24 (statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    FOR             reduce using rule 24 (statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    PRINT           reduce using rule 24 (statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    VAR             reduce using rule 24 (statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    LPAREN          reduce using rule 24 (statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    NUMBER          reduce using rule 24 (statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    OPENQUOTE       reduce using rule 24 (statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    IF              reduce using rule 24 (statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    CLOSEBRACE      reduce using rule 24 (statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    RPAREN          reduce using rule 24 (statement -> WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+
+
+state 103
+
+    (25) statement -> FOR LPAREN assign DELIM expression DELIM bloc . RPAREN OPENBRACE bloc CLOSEBRACE
+
+    RPAREN          shift and go to state 105
+
+
+state 104
+
+    (21) ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .
+    (22) ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE . ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE . ELSE ifstatement
+
+    WHILE           reduce using rule 21 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    FOR             reduce using rule 21 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    PRINT           reduce using rule 21 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    VAR             reduce using rule 21 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    LPAREN          reduce using rule 21 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    NUMBER          reduce using rule 21 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    OPENQUOTE       reduce using rule 21 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    IF              reduce using rule 21 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    CLOSEBRACE      reduce using rule 21 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    RPAREN          reduce using rule 21 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE .)
+    ELSE            shift and go to state 106
+
+
+state 105
+
+    (25) statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN . OPENBRACE bloc CLOSEBRACE
+
+    OPENBRACE       shift and go to state 107
+
+
+state 106
+
+    (22) ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE . OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE . ifstatement
+    (21) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+
+    OPENBRACE       shift and go to state 108
+    IF              shift and go to state 28
+
+    ifstatement                    shift and go to state 109
+
+state 107
+
+    (25) statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE . bloc CLOSEBRACE
+    (16) bloc -> . statement bloc
+    (17) bloc -> . statement
+    (18) statement -> . expression DELIM
+    (19) statement -> . assign DELIM
+    (20) statement -> . ifstatement
+    (24) statement -> . WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (25) statement -> . FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+    (46) assign -> . VAR AFFECT expression
+    (47) assign -> . VAR AFFECT array
+    (21) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+
+    WHILE           shift and go to state 23
+    FOR             shift and go to state 24
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 16
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+    IF              shift and go to state 28
+
+    assign                         shift and go to state 21
+    expression                     shift and go to state 20
+    bloc                           shift and go to state 110
+    statement                      shift and go to state 19
+    ifstatement                    shift and go to state 22
+
+state 108
+
+    (22) ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE . bloc CLOSEBRACE
+    (16) bloc -> . statement bloc
+    (17) bloc -> . statement
+    (18) statement -> . expression DELIM
+    (19) statement -> . assign DELIM
+    (20) statement -> . ifstatement
+    (24) statement -> . WHILE LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (25) statement -> . FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE
+    (26) expression -> . PRINT LPAREN expression RPAREN
+    (27) expression -> . expression AND expression
+    (28) expression -> . expression OR expression
+    (29) expression -> . expression COMPARE expression
+    (30) expression -> . expression PLUS expression
+    (31) expression -> . expression MINUS expression
+    (32) expression -> . expression TIMES expression
+    (33) expression -> . expression DIVIDE expression
+    (34) expression -> . VAR INC
+    (35) expression -> . VAR DEC
+    (36) expression -> . VAR ASSPLUS expression
+    (37) expression -> . VAR ASSMINUS expression
+    (38) expression -> . VAR ASSTIMES expression
+    (39) expression -> . VAR ASSDIV expression
+    (40) expression -> . LPAREN expression RPAREN
+    (41) expression -> . NUMBER
+    (42) expression -> . OPENQUOTE ANY CLOSEQUOTE
+    (43) expression -> . VAR
+    (44) expression -> . VAR LPAREN callparam RPAREN
+    (45) expression -> . VAR LPAREN RPAREN
+    (46) assign -> . VAR AFFECT expression
+    (47) assign -> . VAR AFFECT array
+    (21) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE
+    (22) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE
+    (23) ifstatement -> . IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement
+
+    WHILE           shift and go to state 23
+    FOR             shift and go to state 24
+    PRINT           shift and go to state 25
+    VAR             shift and go to state 16
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 26
+    OPENQUOTE       shift and go to state 27
+    IF              shift and go to state 28
+
+    expression                     shift and go to state 20
+    bloc                           shift and go to state 111
+    statement                      shift and go to state 19
+    assign                         shift and go to state 21
+    ifstatement                    shift and go to state 22
+
+state 109
+
+    (23) ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement .
+
+    WHILE           reduce using rule 23 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement .)
+    FOR             reduce using rule 23 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement .)
+    PRINT           reduce using rule 23 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement .)
+    VAR             reduce using rule 23 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement .)
+    LPAREN          reduce using rule 23 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement .)
+    NUMBER          reduce using rule 23 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement .)
+    OPENQUOTE       reduce using rule 23 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement .)
+    IF              reduce using rule 23 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement .)
+    CLOSEBRACE      reduce using rule 23 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement .)
+    RPAREN          reduce using rule 23 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE ifstatement .)
+
+
+state 110
+
+    (25) statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc . CLOSEBRACE
+
+    CLOSEBRACE      shift and go to state 112
+
+
+state 111
+
+    (22) ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc . CLOSEBRACE
+
+    CLOSEBRACE      shift and go to state 113
+
+
+state 112
+
+    (25) statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE .
+
+    WHILE           reduce using rule 25 (statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE .)
+    FOR             reduce using rule 25 (statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE .)
+    PRINT           reduce using rule 25 (statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE .)
+    VAR             reduce using rule 25 (statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE .)
+    LPAREN          reduce using rule 25 (statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE .)
+    NUMBER          reduce using rule 25 (statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE .)
+    OPENQUOTE       reduce using rule 25 (statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE .)
+    IF              reduce using rule 25 (statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE .)
+    CLOSEBRACE      reduce using rule 25 (statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE .)
+    RPAREN          reduce using rule 25 (statement -> FOR LPAREN assign DELIM expression DELIM bloc RPAREN OPENBRACE bloc CLOSEBRACE .)
+
+
+state 113
+
+    (22) ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE .
+
+    WHILE           reduce using rule 22 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE .)
+    FOR             reduce using rule 22 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE .)
+    PRINT           reduce using rule 22 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE .)
+    VAR             reduce using rule 22 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE .)
+    LPAREN          reduce using rule 22 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE .)
+    NUMBER          reduce using rule 22 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE .)
+    OPENQUOTE       reduce using rule 22 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE .)
+    IF              reduce using rule 22 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE .)
+    CLOSEBRACE      reduce using rule 22 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE .)
+    RPAREN          reduce using rule 22 (ifstatement -> IF LPAREN expression RPAREN OPENBRACE bloc CLOSEBRACE ELSE OPENBRACE bloc CLOSEBRACE .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: reduce/reduce conflict in state 87 resolved using rule (value -> VAR)
+WARNING: rejected rule (expression -> VAR) in state 87
