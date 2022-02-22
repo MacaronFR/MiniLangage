@@ -1,5 +1,10 @@
 from genereTreeGraphviz2 import printTreeGraph
 
+
+class Stop(BaseException):
+    a = 0
+
+
 reserved = {
     'print': 'PRINT',
     'if': 'IF',
@@ -7,7 +12,8 @@ reserved = {
     'while': 'WHILE',
     'for': 'FOR',
     'fun': 'FUN',
-    'proc': 'PROC'
+    'proc': 'PROC',
+    'stop': 'STOP'
 }
 
 tokens = [
@@ -54,6 +60,8 @@ precedence = (
 
 function = {}
 
+procedure = {}
+
 
 def t_VAR(t):
     r"""[a-zA-Z_][a-zA-Z0-9_]*"""
@@ -91,8 +99,15 @@ def p_start(p):
     print('Arbre de dérivation = ', p[0])
     printTreeGraph(p[1])
     evalCode(p[1])
-    evalInst(function['main'][1], {})
-
+    try:
+        if 'main' in function:
+            evalInst(function['main'][1], {})
+        elif 'main' in procedure:
+            evalInst(procedure['main'][1], {})
+        else:
+            print("No entry point")
+    except Stop:
+        print("STOP MAIN")
 
 def p_code(p):
     """code : function code
@@ -154,6 +169,15 @@ def p_function(p):
         p[0] = ('function', p[2], ("param"), p[6])
 
 
+def p_procedure(p):
+    """function : PROC VAR LPAREN param RPAREN OPENBRACE bloc CLOSEBRACE
+    | PROC VAR LPAREN RPAREN OPENBRACE bloc CLOSEBRACE"""
+    if len(p) > 8:
+        p[0] = ('procedure', p[2], p[4], p[7])
+    else:
+        p[0] = ('procedure', p[2], ("param"), p[6])
+
+
 def p_bloc(p):
     """bloc : statement bloc
     | statement"""
@@ -167,6 +191,11 @@ def p_statement_expr(p):
     """statement : expression DELIM
     | assign DELIM"""
     p[0] = p[1]
+
+
+def p_statement_stop(p):
+    """statement : STOP DELIM"""
+    p[0] = 'stop'
 
 
 def p_statement_if(p):
@@ -272,7 +301,7 @@ def p_expression_group(p):
 
 def p_expression_number(p):
     'expression : NUMBER'
-    p[0] =  p[1]
+    p[0] = p[1]
 
 
 def p_epxression_string(p):
@@ -349,8 +378,22 @@ def evalExpr(t, scope):
         if t[0] == '--':
             scope[t[1]] -= 1
             return scope[t[1]]
+        if t[0] == 'call':
+            new_scope = prepare_scope(t[2], t[1])
+            if t[1] in function:
+                try:
+                    evalInst(function[t[1]], new_scope)
+                finally:
+                    if t[1] in new_scope:
+                        return new_scope[t[1]]
+                    raise ValueError("Function " + t[1] + " doesn't return value")
+            elif t[1] in procedure:
+                evalInst(procedure[t[1]], new_scope)
+            else:
+                print("Aucune fonction ou procédure appelé", t[1])
         if t[0] == 'array':
-            print(t)
+            if type(t[1]) == tuple:
+                return getParam(t[1])
     else:
         return t
 
@@ -367,45 +410,57 @@ def evalAssOp(t, scope):
 
 
 def evalInst(t, scope):
-    if t[0] in exprBin:
-        evalExpr(t[1], scope)
-        evalExpr(t[2], scope)
-    elif t[0] in exprUn:
-        evalExpr(t, scope)
-    else:
-        if t[0] == 'call':
-            evalInst(function[t[1]], prepareScope(t[2], t[1]))
-        elif t[0] == 'assign':
-            scope[t[1]] = evalExpr(t[2], scope)
-        elif t[0] in exprAss:
-            evalAssOp(t, scope)
-        elif t[0] == 'print':
-            print('CALC >' + str(evalExpr(t[1], scope)))
-        elif t[0] == 'if':
-            if evalExpr(t[1], scope):
-                evalInst(t[2], scope)
-            elif len(t) > 3:
-                evalInst(t[3][1], scope)
-        elif t[0] == 'while':
-            while evalExpr(t[1], scope):
-                evalInst(t[2], scope)
-        elif t[0] == 'for':
-            evalInst(t[1], scope)
-            while evalExpr(t[2], scope):
-                evalInst(t[4], scope)
-                evalInst(t[3], scope)
+    try:
+        if t[0] in exprBin:
+            evalExpr(t[1], scope)
+            evalExpr(t[2], scope)
+        elif t[0] in exprUn:
+            evalExpr(t, scope)
         else:
-            evalInst(t[1], scope)
-            if len(t) > 2:
-                evalInst(t[2], scope)
+            if t[0] == 'call':
+                try:
+                    evalExpr(t, scope)
+                except Stop:
+                    print("STOP")
+                    return
+            elif t[0] == 'assign':
+                scope[t[1]] = evalExpr(t[2], scope)
+            elif t[0] in exprAss:
+                evalAssOp(t, scope)
+            elif t[0] == 'print':
+                print('CALC >' + str(evalExpr(t[1], scope)))
+            elif t[0] == 'if':
+                if evalExpr(t[1], scope):
+                    evalInst(t[2], scope)
+                elif len(t) > 3:
+                    evalInst(t[3][1], scope)
+            elif t[0] == 'while':
+                while evalExpr(t[1], scope):
+                    evalInst(t[2], scope)
+            elif t[0] == 'for':
+                evalInst(t[1], scope)
+                while evalExpr(t[2], scope):
+                    evalInst(t[4], scope)
+                    evalInst(t[3], scope)
+            elif t == 'stop':
+                raise Stop
+            else:
+                evalInst(t[1], scope)
+                if len(t) > 2:
+                    evalInst(t[2], scope)
+    except Stop:
+        raise Stop
 
 
-def prepareScope(value, name):
-    return dict(zip(getParam(function[name][0]), getParam(value)))
+def prepare_scope(value, name):
+    if name in function:
+        return dict(zip(getParam(function[name][0]), getParam(value)))
+    elif name in procedure:
+        return dict(zip(getParam(procedure[name][0]), getParam(value)))
 
 
 def getParam(t):
-    print(t)
+    print("getPram", t)
     if len(t) == 2:
         return [t[1]]
     else:
@@ -418,10 +473,25 @@ def evalCode(t):
         if len(t) > 2:
             evalCode(t[2])
     elif t[0] == 'function':
+        if not check_function_name(t[1]):
+            print("Function", t[1], "already defined")
+            return
         if check_function(t[1], t[3]):
             function[t[1]] = (t[2], t[3])
         else:
             print("Error function", t[1], "don't return any value")
+    elif t[0] == 'procedure':
+        if not check_function_name(t[1]):
+            print("Procedure", t[1], "already defined")
+            return
+        if not check_function(t[1], t[3]):
+            procedure[t[1]] = (t[2], t[3])
+        else:
+            print("Error procedure", t[1], "return a value")
+
+
+def check_function_name(name):
+    return name not in function and name not in procedure
 
 
 def check_function(name, body):
@@ -438,7 +508,7 @@ def check_function(name, body):
     return False
 
 
-s = 'fun test5(){' \
+s = 'proc test5(){' \
     '   print(67);' \
     '}' \
     '' \
@@ -465,13 +535,17 @@ s = 'fun test5(){' \
     '   for(i=0;i<10;i++;print(i);){' \
     '       print(i);' \
     '   }' \
-    '   test(5,7);' \
+    '   print(test(5,7));' \
     '   main = x;' \
+    '   stop;' \
+    '   print(1);' \
     '}' \
     '' \
     'fun test(ola, ole){' \
-    '   print(ola+ole);' \
-    '   test = 5;' \
+    '   test = ola + ole;' \
+    '   print(4);' \
+    '   stop;' \
+    '   print(5);' \
     '}'
 
 yacc.parse(s)
