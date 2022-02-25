@@ -304,13 +304,14 @@ def p_expression_number(p):
     p[0] = p[1]
 
 
-def p_epxression_string(p):
-    """expression : OPENQUOTE ANY CLOSEQUOTE"""
-
-
 def p_expression_var(p):
     'expression : VAR'
     p[0] = p[1]
+
+
+def p_expression_array_access(p):
+    """expression : VAR LBRACKET expression RBRACKET"""
+    p[0] = ('arrayAccess', p[1], p[3])
 
 
 def p_expression_call(p):
@@ -400,6 +401,14 @@ def evalExpr(t, scope):
                 return getParam(t[1])
             else:
                 return []
+        if t[0] == 'arrayAccess':
+            var = scope[t[1]]
+            if type(var) == list:
+                index = evalExpr(t[2], scope)
+                if index < len(var):
+                    return var[index]
+                raise IndexError(str(index) + " out of range in array " + t[1])
+            raise TypeError(t[1] + " is not an array")
     else:
         return t
 
@@ -535,7 +544,9 @@ s = 'proc test5(){' \
     '   y[0] = 8;' \
     '   z = [5,6,7,8];' \
     '   z[1+1] = 6 + 7;' \
-    '   z[test(1,0)] = test(5,6);'\
+    '   z[test(1,0)] = test(5,6);' \
+    '   print(z[1]);' \
+    '   print(y[1-1]);'\
     '   x=1;' \
     '   print(1<=1);' \
     '   x=6+4;print(x);' \
