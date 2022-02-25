@@ -97,7 +97,7 @@ def p_start(p):
     """start : code"""
     p[0] = ('START', p[1])
     print('Arbre de dérivation = ', p[0])
-    printTreeGraph(p[1])
+    #printTreeGraph(p[1])
     evalCode(p[1])
     try:
         if 'main' in function:
@@ -451,7 +451,6 @@ def evalInst(t, scope):
                             tmp[index] = value
                     else:
                         raise TypeError(t[1] + " is not an array")
-                    print(scope)
             elif t[0] in exprAss:
                 evalAssOp(t, scope)
             elif t[0] == 'print':
@@ -470,7 +469,6 @@ def evalInst(t, scope):
                     evalInst(t[4], scope)
                     evalInst(t[3], scope)
             elif t == 'stop':
-                print(scope)
                 raise Stop
             else:
                 evalInst(t[1], scope)
