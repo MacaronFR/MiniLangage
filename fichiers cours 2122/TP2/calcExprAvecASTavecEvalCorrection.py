@@ -107,7 +107,7 @@ def p_start(p):
         else:
             print("No entry point")
     except Stop:
-        print("STOP MAIN")
+        return
 
 def p_code(p):
     """code : function code
@@ -324,8 +324,12 @@ def p_expression_call(p):
 
 def p_assign(p):
     """assign : VAR AFFECT expression
-    | VAR AFFECT array"""
-    p[0] = ('assign', p[1], p[3])
+    | VAR AFFECT array
+    | VAR LBRACKET expression RBRACKET AFFECT expression"""
+    if len(p) > 4:
+        p[0] = ('assign', p[1], p[6], p[3])
+    else:
+        p[0] = ('assign', p[1], p[3])
 
 
 def p_error(p):
@@ -394,6 +398,8 @@ def evalExpr(t, scope):
         if t[0] == 'array':
             if type(t[1]) == tuple:
                 return getParam(t[1])
+            else:
+                return []
     else:
         return t
 
@@ -421,10 +427,22 @@ def evalInst(t, scope):
                 try:
                     evalExpr(t, scope)
                 except Stop:
-                    print("STOP")
                     return
             elif t[0] == 'assign':
-                scope[t[1]] = evalExpr(t[2], scope)
+                value = evalExpr(t[2], scope)
+                if len(t) < 4:
+                    scope[t[1]] = value
+                else:
+                    tmp = scope[t[1]]
+                    index = evalExpr(t[3], scope)
+                    if type(tmp) == list:
+                        if len(tmp) <= index:
+                            tmp.append(value)
+                        else:
+                            tmp[index] = value
+                    else:
+                        raise TypeError(t[1] + " is not an array")
+                    print(scope)
             elif t[0] in exprAss:
                 evalAssOp(t, scope)
             elif t[0] == 'print':
@@ -443,6 +461,7 @@ def evalInst(t, scope):
                     evalInst(t[4], scope)
                     evalInst(t[3], scope)
             elif t == 'stop':
+                print(scope)
                 raise Stop
             else:
                 evalInst(t[1], scope)
@@ -460,7 +479,6 @@ def prepare_scope(value, name):
 
 
 def getParam(t):
-    print("getPram", t)
     if len(t) == 2:
         return [t[1]]
     else:
@@ -514,7 +532,10 @@ s = 'proc test5(){' \
     '' \
     'fun main(){' \
     '   y = [];' \
-    '   z = [5,6,7,8];'\
+    '   y[0] = 8;' \
+    '   z = [5,6,7,8];' \
+    '   z[1+1] = 6 + 7;' \
+    '   z[test(1,0)] = test(5,6);'\
     '   x=1;' \
     '   print(1<=1);' \
     '   x=6+4;print(x);' \
